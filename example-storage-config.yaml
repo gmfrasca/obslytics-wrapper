@@ -1,0 +1,11 @@
+{
+  "storage": {
+    "type": "s3",
+    "config": {
+      "bucket": "S3-BUCKET-NAME",
+      "endpoint": "s3.myhost.example.com",
+      "access_key": "MY_ACCESS_KEY",
+      "secret_key": "MY_SECRET_KEY"
+    }
+  }
+}
