@@ -9,6 +9,26 @@
 # OUTPUT_METRIC_RESOLUTION - Output Metric Resolution (e.g. 1h)
 # STORAGE_CONFIG_FILE - Configuration for Metric output storage (e.g. storage-config.yaml)
 
+METRIC_MAX_TIME=now
+METRIC_STEP=60min
+METRIC_DELAY=2hour
+STORAGE_CONFIG_FILE=storage-config.yaml
+OUTPUT_METRIC_RESOLUTION=1h
+METRIC_MATCH=up
+INPUT_CONFIG_FILE=input-config.yaml
+
+# metric_min_time = (metric_max_time - delay) - ((metric_max_time - delay) % step)
+(( METRIC_DELAY_SECONDS=$(date --date="$METRIC_DELAY" -u +%s)-$(date -u +%s) ))
+(( METRIC_STEP_SECONDS=$(date --date="$METRIC_STEP" -u +%s)-$(date -u +%s) ))
+(( TARGET_TIMESTAMP=$(date --date=$METRIC_MAX_TIME -u +%s )-METRIC_DELAY_SECONDS))
+(( METRIC_MIN_TIME_SECONDS=TARGET_TIMESTAMP - (TARGET_TIMESTAMP % METRIC_STEP_SECONDS) ))
+METRIC_MIN_TIME=$(date --date=@"$METRIC_MIN_TIME_SECONDS"  +%FT%TZ -u)
+METRIC_MAX_TIME=$(date --date="$METRIC_MAX_TIME"  +%FT%TZ -u)
+
+echo $METRIC_DELAY_SECONDS
+echo $METRIC_STEP_SECONDS
+
+echo "Defined Metric Time Range: $METRIC_MIN_TIME - $METRIC_MAX_TIME"
 
 OUTPUT_CONFIG_FILE=/tmp/output-config.yaml
 
@@ -29,10 +49,10 @@ if [ -z "$METRIC_MAX_TIME" ]; then
 fi
 
 
-TIMESTAMP="$(date --date=$METRIC_MAX_TIME -u +%s)"
-YEAR="$(date --date=$METRIC_MAX_TIME -u +%Y)"
-MONTH="$(date --date=$METRIC_MAX_TIME -u +%m)"
-DAY="$(date --date=$METRIC_MAX_TIME -u +%d)"
+TIMESTAMP="$(date --date="$METRIC_MIN_TIME" -u +%s)"
+YEAR="$(date --date="$METRIC_MIN_TIME" -u +%Y)"
+MONTH="$(date --date="$METRIC_MIN_TIME" -u +%m)"
+DAY="$(date --date="$METRIC_MIN_TIME" -u +%d)"
 OUTPUT_FILE_PATH="metric=$METRIC_MATCH/year=$YEAR/month=$MONTH/day=$DAY/$TIMESTAMP.$OUTPUT_FILE_TYPE"
 echo "Output File will be stored at: $OUTPUT_FILE_PATH"
 
