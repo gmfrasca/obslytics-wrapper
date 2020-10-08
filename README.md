@@ -8,7 +8,7 @@
     `docker build . -t obslytics-wrapper`
   
 ### Start a new container
-* Set up all the [required parameters](https://github.com/4n4nd/obslytics-wrapper/blob/main/run.sh#L1-L11) 
-    in a file [(Example)](https://github.com/4n4nd/obslytics-wrapper/blob/a4ef9dcc7c463b0c434308a74c5e07adb8a7b8fd/.env-example).
+* Set up all the [required parameters](https://github.com/4n4nd/obslytics-wrapper/blob/main/run.sh#L1-L12) 
+    in a file [(Example)](https://github.com/4n4nd/obslytics-wrapper/blob/main/.env-example).
 * Then run the following command: <br>
     `docker run --network=host -it --env-file=.env-example obslytics-wrapper:latest`
