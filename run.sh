@@ -9,6 +9,7 @@
 # OUTPUT_FILE_TYPE - Output File Type (Default: parquet)
 # OUTPUT_METRIC_RESOLUTION - Output Metric Resolution (e.g. 1h)
 # STORAGE_CONFIG_FILE - Configuration for Metric output storage (e.g. storage-config.yaml)
+# METRIC_STORAGE_PREFIX - String to be appended to the metric storage path (e.g. "/data/")
 
 
 if [ -z "$METRIC_MAX_TIME" ]; then
@@ -47,7 +48,7 @@ TIMESTAMP="$(date --date="$METRIC_MIN_TIME" -u +%s)"
 YEAR="$(date --date="$METRIC_MIN_TIME" -u +%Y)"
 MONTH="$(date --date="$METRIC_MIN_TIME" -u +%m)"
 DAY="$(date --date="$METRIC_MIN_TIME" -u +%d)"
-OUTPUT_FILE_PATH="metric=$METRIC_MATCH/year=$YEAR/month=$MONTH/day=$DAY/$TIMESTAMP.$OUTPUT_FILE_TYPE"
+OUTPUT_FILE_PATH="$METRIC_STORAGE_PREFIX""metric=$METRIC_MATCH/year=$YEAR/month=$MONTH/day=$DAY/$TIMESTAMP.$OUTPUT_FILE_TYPE"
 echo "Output File will be stored at: $OUTPUT_FILE_PATH"
 
 if [ -z "$STORAGE_CONFIG_FILE" ]; then
