@@ -1,4 +1,4 @@
-FROM golang:1.14
+FROM quay.io/avsrivas/golang:1.14
 # set up obslytics
 RUN go get -d -v github.com/thanos-community/obslytics/cmd/obslytics
 WORKDIR /go/src/github.com/thanos-community/obslytics/cmd/obslytics
