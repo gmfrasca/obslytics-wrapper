@@ -10,5 +10,5 @@ RUN GO111MODULE=on go get github.com/mikefarah/yq/v3
 WORKDIR /home
 # Set up wrapper script
 COPY . .
-RUN chmod +x entrypoint.sh
+RUN chmod +x run.sh
 CMD ["bash","./run.sh"]
