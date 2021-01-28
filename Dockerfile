@@ -1,4 +1,4 @@
-FROM golang:1.14
+FROM quay.io/internaldatahub/golang:1.14
 USER 1001
 ENV GOCACHE=/tmp
 # set up obslytics
