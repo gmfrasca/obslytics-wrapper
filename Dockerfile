@@ -7,8 +7,8 @@ WORKDIR /go/src/github.com/gmfrasca/obslytics/cmd/obslytics
 RUN go install .
 RUN  export PATH=$PATH:$(dirname $(go list -f '{{.Target}}' .))
 RUN GO111MODULE=on go get github.com/mikefarah/yq/v3
-RUN go get -u github.com/aws/aws-sdk-go/...
 WORKDIR /home
+RUN go get -u github.com/aws/aws-sdk-go/...
 # Set up wrapper script
 COPY . .
 CMD ["bash","./run.sh"]
